@@ -4,7 +4,7 @@
 #= require activeadmin-wysihtml5/jquery.paginate.min
 
 (($) ->
-
+  window.WYSIHTML5 = {}
   $.fn.modal = (options) ->
     $overlay = $("#lean_overlay")
     if $overlay.length == 0
@@ -30,6 +30,7 @@
         $content.hide().remove()
 
   $.fn.activeAdminWysihtml5 = (options) ->
+    window.WYSIHTML5.instances ||= {}
     this.each ->
       $editor = $(this)
       return if $editor.data('activeadmin-wysihtml5')
@@ -44,6 +45,7 @@
         stylesheets: "/assets/activeadmin-wysihtml5/wysiwyg.css",
         parserRules: wysihtml5ParserRules
       })
+      window.WYSIHTML5.instances[$textarea.attr("id")] = editor
 
       $button = $toolbar.find('a[data-wysihtml5-command=createLink]').click ->
         $modal = $editor.find(".modal-link").clone()
