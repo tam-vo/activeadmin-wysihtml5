@@ -37,9 +37,9 @@
     window.WYSIHTML5.instances ||= {}
     this.each ->
       $editor = $(this)
-      return if $editor.data('activeadmin-wysihtml5')
+      return if $editor.data('activeadmin-wysihtml')
 
-      $editor.data('activeadmin-wysihtml5', true)
+      $editor.data('activeadmin-wysihtml', true)
 
       $toolbar = $editor.find('.toolbar')
       $textarea = $editor.find('textarea')
@@ -62,7 +62,7 @@
           $(@).addClass("active")
           false
 
-        activeButton = $(this).hasClass("wysihtml5-command-active")
+        activeButton = $(this).hasClass("wysihtml-command-active")
         if !activeButton
           $modal.modal()
           $tab_contents.find("[name=text]").val(editor.composer.selection.getText())
@@ -150,7 +150,7 @@
             editor.currentView.element.focus()
             editor.composer.commands.exec("insertImage", el)
 
-        activeButton = $(this).hasClass("wysihtml5-command-active")
+        activeButton = $(this).hasClass("wysihtml-command-active")
         if !activeButton
           $modal.modal()
           $tab_handles.eq(0).click()
@@ -195,7 +195,7 @@
           editor.currentView.element.focus()
           editor.composer.commands.exec("insertVideo", el)
 
-        activeButton = $(this).hasClass("wysihtml5-command-active")
+        activeButton = $(this).hasClass("wysihtml-command-active")
         if !activeButton
           $modal.modal()
           false
@@ -203,10 +203,10 @@
           true
 
   $ ->
-    $('.activeadmin-wysihtml5:visible').activeAdminWysihtml5()
+    $('.activeadmin-wysihtml:visible').activeAdminWysihtml5()
     $("a").bind "click", ->
       setTimeout(
-        -> $('.activeadmin-wysihtml5:visible').activeAdminWysihtml5()
+        -> $('.activeadmin-wysihtml:visible').activeAdminWysihtml5()
         50
       )
 

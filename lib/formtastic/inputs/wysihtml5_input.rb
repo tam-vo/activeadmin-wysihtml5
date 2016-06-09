@@ -84,6 +84,7 @@ module Formtastic
               title = I18n.t("wysihtml5.command.#{command}", default: command.to_s.titleize)
               commands << template.content_tag(
                 :a,
+                class: "editor-command #{command}",
                 title: title,
                 data: (command == :source ? {wysihtml_action: wysihtml5_command} : { wysihtml_command: wysihtml5_command })
               ) do
@@ -116,7 +117,7 @@ module Formtastic
 
         input_wrapping do
           label_html <<
-          template.content_tag(:div, class: 'activeadmin-wysihtml5') do
+          template.content_tag(:div, class: 'activeadmin-wysihtml') do
             toolbar <<
             builder.text_area(method, input_html_options.merge(opts))
           end
@@ -125,7 +126,7 @@ module Formtastic
 
       def toolbar_dialogs
         html = <<-HTML
-        <div class="activeadmin-wysihtml5-modal modal-link">
+        <div class="activeadmin-wysihtml-modal modal-link">
           <div class="modal-title">
             #{I18n.t("wysihtml5.dialog.link.dialog_title")}
           </div>
@@ -184,7 +185,7 @@ module Formtastic
             <a data-modal="close" data-action="save" class="button primary">#{I18n.t("wysihtml5.dialog.ok")}</a>
           </div>
         </div>
-        <div class="activeadmin-wysihtml5-modal modal-image">
+        <div class="activeadmin-wysihtml-modal modal-image">
           <div class="modal-title">
             #{I18n.t("wysihtml5.dialog.image.dialog_title")}
           </div>
@@ -257,7 +258,7 @@ module Formtastic
             <a data-modal="close" data-action="save" class="button primary">#{I18n.t("wysihtml5.dialog.ok")}</a>
           </div>
         </div>
-        <div class="activeadmin-wysihtml5-modal modal-video">
+        <div class="activeadmin-wysihtml-modal modal-video">
           <div class="modal-title">
             #{I18n.t("wysihtml5.dialog.video.dialog_title")}
           </div>

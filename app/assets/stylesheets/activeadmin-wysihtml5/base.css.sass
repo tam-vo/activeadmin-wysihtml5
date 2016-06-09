@@ -1,7 +1,7 @@
 @import 'active_admin/mixins'
 @import 'activeadmin-wysihtml5/icons'
 
-.wysihtml5-sandbox
+.wysihtml-andbox
   +box-sizing(border-box)
 
 #modal-overlay
@@ -15,7 +15,7 @@
   display: none
   opacity: 0.6
 
-.activeadmin-wysihtml5-modal
+.activeadmin-wysihtml-modal
   background-color: white
   width: 550px
   border-radius: 5px
@@ -156,10 +156,10 @@
   +icon($icon)
 
 body.active_admin form
-  .input.wysihtml5
+  .input.wysihtml
     +clearfix
 
-  .activeadmin-wysihtml5
+  .activeadmin-wysihtml
     +nested-reset
     float: right
     width: 89%
@@ -195,7 +195,7 @@ body.active_admin form
           text-decoration: none
           position: relative
 
-          &.wysihtml5-command-active, &.wysihtml5-action-active
+          &.wysihtml-command-active, &.wysihtml-action-active
             +linear-gradient(darken(#E6E6E6, 10%), #E6E6E6)
             box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4)
 
@@ -296,7 +296,7 @@ body.active_admin form
           &:hover ul
             display: block
 
-      &.wysihtml5-commands-disabled
+      &.wysihtml-commands-disabled
         &> li
           &> a,
           &> .blocks-selector
