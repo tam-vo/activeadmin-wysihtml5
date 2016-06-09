@@ -5,7 +5,8 @@ module Formtastic
       COMMANDS_PRESET = {
         barebone: [ :bold, :italic, :link, :source ],
         basic: [ :bold, :italic, :ul, :ol, :link, :image, :source ],
-        all: [ :bold, :italic, :underline, :ul, :ol, :outdent, :indent, :link, :image, :video, :source, :alignRight ]
+        all: [ :bold, :italic, :underline, :ul, :ol, :outdent, :indent, :link, :image, :video, :source,
+               :alignLeft, :alignRight, :alignCenter, :color, :undo, :redo ]
       }
 
       BLOCKS_PRESET = {
@@ -56,9 +57,12 @@ module Formtastic
         command_groups = [
           [ :bold, :italic, :underline ],
           [ :ul, :ol, :outdent, :indent ],
+          [ :alignLeft, :alignRight, :alignCenter ],
+          [ :color ],
           [ :link ],
           [ :image ],
           [ :video ],
+          [ :undo, :redo],
           [ :source ]
         ]
         command_mapper = {
@@ -68,7 +72,20 @@ module Formtastic
           ul: 'insertUnorderedList',
           ol: 'insertOrderedList',
           source: 'change_view',
-          alignRight: 'alignRightStyle'
+          alignLeft: 'alignLeftStyle',
+          alignRight: 'alignRightStyle',
+          alignCenter: 'alignCenterStyle',
+          color: 'foreColorStyle',
+          undo: 'undo',
+          redo: 'redo'
+        }
+        command_addition_script = {
+          color: "
+            <div data-wysihtml-dialog='foreColorStyle' style='display: none;'>
+              Color:
+              <input type='text' data-wysihtml-dialog-field='color' value='rgba(0,0,0,1)' />
+              <a data-wysihtml-dialog-action='save'>OK</a>&nbsp;<a data-wysihtml-dialog-action='cancel'>Cancel</a>
+            </div>"
         }
 
         toolbar_commands = options[:commands] || input_html_options[:commands] || :all
@@ -89,6 +106,9 @@ module Formtastic
                 data: (command == :source ? {wysihtml_action: wysihtml5_command} : { wysihtml_command: wysihtml5_command })
               ) do
                 template.content_tag(:span, title)
+              end
+              if command_addition_script[command.to_sym]
+                commands << command_addition_script[command.to_sym]
               end
             end
           end
