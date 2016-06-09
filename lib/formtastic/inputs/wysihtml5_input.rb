@@ -5,7 +5,7 @@ module Formtastic
       COMMANDS_PRESET = {
         barebone: [ :bold, :italic, :link, :source ],
         basic: [ :bold, :italic, :ul, :ol, :link, :image, :source ],
-        all: [ :bold, :italic, :underline, :ul, :ol, :outdent, :indent, :link, :image, :video, :source ]
+        all: [ :bold, :italic, :underline, :ul, :ol, :outdent, :indent, :link, :image, :video, :source, :alignRight ]
       }
 
       BLOCKS_PRESET = {
@@ -23,7 +23,7 @@ module Formtastic
       }
 
       def toolbar_blocks
-        blocks = options[:blocks] || input_html_options[:blocks] || :basic
+        blocks = options[:blocks] || input_html_options[:blocks] || :all
         if !blocks.is_a? Array
           blocks = BLOCKS_PRESET[blocks.to_sym]
         end
@@ -38,10 +38,9 @@ module Formtastic
                     template.content_tag(
                       :a,
                       I18n.t("wysihtml5.blocks.#{block}", default: block.to_s.titleize),
-                      href: "javascript:void(0);",
                       data: {
-                        wysihtml5_command: 'formatBlock',
-                        wysihtml5_command_value: block
+                        wysihtml_command: 'formatBlock',
+                        wysihtml_command_value: block
                     })
                   end
                 end.join.html_safe
@@ -68,10 +67,11 @@ module Formtastic
           video: 'insertVideo',
           ul: 'insertUnorderedList',
           ol: 'insertOrderedList',
-          source: 'change_view'
+          source: 'change_view',
+          alignRight: 'alignRightStyle'
         }
 
-        toolbar_commands = options[:commands] || input_html_options[:commands] || :basic
+        toolbar_commands = options[:commands] || input_html_options[:commands] || :all
         if !toolbar_commands.is_a? Array
           toolbar_commands = COMMANDS_PRESET[toolbar_commands.to_sym]
         end
@@ -84,10 +84,8 @@ module Formtastic
               title = I18n.t("wysihtml5.command.#{command}", default: command.to_s.titleize)
               commands << template.content_tag(
                 :a,
-                href: "javascript:void(0)",
-                class: "editor-command #{command}",
                 title: title,
-                data: (command == :source ? {wysihtml5_action: wysihtml5_command} : { wysihtml5_command: wysihtml5_command })
+                data: (command == :source ? {wysihtml_action: wysihtml5_command} : { wysihtml_command: wysihtml5_command })
               ) do
                 template.content_tag(:span, title)
               end

@@ -1,4 +1,8 @@
-#= require activeadmin-wysihtml5/wysihtml5.min
+#= require activeadmin-wysihtml5/wysihtml
+#= require activeadmin-wysihtml5/wysihtml.all-commands
+#= require activeadmin-wysihtml5/wysihtml.table_editing
+#= require activeadmin-wysihtml5/wysihtml.toolbar
+#= require activeadmin-wysihtml5/advanced_and_extended
 #= require activeadmin-wysihtml5/parser_rules
 #= require activeadmin-wysihtml5/fileuploader
 #= require activeadmin-wysihtml5/jquery.paginate.min
@@ -40,14 +44,14 @@
       $toolbar = $editor.find('.toolbar')
       $textarea = $editor.find('textarea')
 
-      editor = new wysihtml5.Editor($textarea.attr('id'), {
+      editor = new wysihtml.Editor($textarea.attr('id'), {
         toolbar: $toolbar.attr('id'),
         stylesheets: "/assets/activeadmin-wysihtml5/wysiwyg.css",
-        parserRules: wysihtml5ParserRules
+        parserRules: wysihtmlParserRules
       })
       window.WYSIHTML5.instances[$textarea.attr("id")] = editor
 
-      $button = $toolbar.find('a[data-wysihtml5-command=createLink]').click ->
+      $button = $toolbar.find('a[data-wysihtml-command=createLink]').click ->
         $modal = $editor.find(".modal-link").clone()
         $field = $modal.find("input")
         $tab_contents = $modal.find("[data-tab]").hide()
@@ -87,7 +91,7 @@
         else
           true
 
-      $toolbar.find('a[data-wysihtml5-command=insertImage]').click ->
+      $toolbar.find('a[data-wysihtml-command=insertImage]').click ->
         $modal = $editor.find(".modal-image").clone()
         $uploader = $modal.find('.asset-uploader')
         $gallery = $modal.find('.assets-container ul')
@@ -156,7 +160,7 @@
         else
           true
 
-      $toolbar.find('a[data-wysihtml5-command=insertVideo]').click ->
+      $toolbar.find('a[data-wysihtml-command=insertVideo]').click ->
         $modal = $editor.find(".modal-video").clone()
         $tab_contents = $modal.find("[data-tab]")
 
