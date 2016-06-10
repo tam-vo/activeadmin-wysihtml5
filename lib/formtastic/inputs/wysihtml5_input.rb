@@ -135,7 +135,7 @@ module Formtastic
       end
 
       def to_html
-        height = options[:height] || input_html_options[:height] || :medium
+        height = options[:height] || input_html_options[:height] || :large
 
         if !height.is_a? Integer
           height = HEIGHT_PRESET[height.to_sym]
