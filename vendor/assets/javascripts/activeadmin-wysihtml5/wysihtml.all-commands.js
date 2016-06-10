@@ -203,7 +203,7 @@ wysihtml.commands.insertImage = (function() {
   var NODE_NAME = "IMG";
   return {
     exec: function(composer, command, value) {
-      value = typeof(value) === "object" ? value : { src: value };
+      value = (typeof(value) === "object") && value != null ? value : { src: value };
 
       var doc     = composer.doc,
           image   = this.state(composer),

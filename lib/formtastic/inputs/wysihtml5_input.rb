@@ -5,7 +5,7 @@ module Formtastic
       COMMANDS_PRESET = {
         barebone: [ :bold, :italic, :link, :source ],
         basic: [ :bold, :italic, :ul, :ol, :link, :image, :source ],
-        all: [ :bold, :italic, :underline, :ul, :ol, :outdent, :indent, :link, :image, :video, :source,
+        all: [ :bold, :italic, :underline, :ul, :ol, :outdent, :indent, :link, :removeLink, :image, :video, :source,
                :alignLeft, :alignRight, :alignCenter, :size, :color, :undo, :redo ]
       }
 
@@ -60,7 +60,7 @@ module Formtastic
           [ :alignLeft, :alignRight, :alignCenter ],
           [ :size ],
           [ :color ],
-          [ :link ],
+          [ :link, :removeLink ],
           [ :image ],
           [ :video ],
           [ :undo, :redo],
@@ -68,6 +68,7 @@ module Formtastic
         ]
         command_mapper = {
           link: 'createLink',
+          removeLink: 'removeLink',
           image: 'insertImage',
           video: 'insertVideo',
           ul: 'insertUnorderedList',
