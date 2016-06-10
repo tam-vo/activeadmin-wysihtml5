@@ -109,7 +109,7 @@
         refreshAssets = ->
           $gallery.empty()
 
-          $.getJSON '/admin/assets.json', (data) ->
+          $.getJSON '/admin2/assets.json', (data) ->
             $.each data, (i, asset) ->
               $img = $("<img/>")
               $img.attr
@@ -126,7 +126,7 @@
         initUploader = ->
           uploader = new qq.FileUploader
             element: $uploader.get(0)
-            action: '/admin/assets.json'
+            action: '/admin2/assets.json'
             onComplete: ->
               refreshAssets()
               $tab_handles.eq(1).click()
