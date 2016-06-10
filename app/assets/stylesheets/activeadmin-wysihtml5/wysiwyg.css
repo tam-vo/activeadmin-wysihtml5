@@ -142,3 +142,16 @@ table, td, th {
   border: 1px solid #666;
 }
 
+div[data-wysihtml-dialog="createTable"] {
+  position: absolute;
+  background: white;
+}
+
+div[data-wysihtml-dialog="createTable"] td {
+  width: 10px; height: 5px;
+  border: 1px solid #666;
+}
+
+.wysihtml-editor table td.wysiwyg-tmp-selected-cell {
+  outline: 2px solid green;
+}

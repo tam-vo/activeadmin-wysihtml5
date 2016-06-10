@@ -6,7 +6,7 @@ module Formtastic
         barebone: [ :bold, :italic, :link, :source ],
         basic: [ :bold, :italic, :ul, :ol, :link, :image, :source ],
         all: [ :bold, :italic, :underline, :ul, :ol, :outdent, :indent, :link, :removeLink, :image, :video, :source,
-               :alignLeft, :alignRight, :alignCenter, :size, :color, :undo, :redo ]
+               :alignLeft, :alignRight, :alignCenter, :size, :color, :undo, :redo, :createTable]
       }
 
       BLOCKS_PRESET = {
@@ -64,6 +64,7 @@ module Formtastic
           [ :image ],
           [ :video ],
           [ :undo, :redo],
+          [ :createTable ],
           [ :source ]
         ]
         command_mapper = {
@@ -80,7 +81,8 @@ module Formtastic
           color: 'foreColorStyle',
           size: 'fontSizeStyle',
           undo: 'undo',
-          redo: 'redo'
+          redo: 'redo',
+          createTable: 'createTable'
         }
         command_addition_script = {
           color: "
@@ -88,13 +90,31 @@ module Formtastic
               Color:
               <input type='text' data-wysihtml-dialog-field='color' value='rgba(0,0,0,1)' />
               <a data-wysihtml-dialog-action='save'>OK</a>&nbsp;<a data-wysihtml-dialog-action='cancel'>Cancel</a>
-            </div>",
+            </div>
+            ",
               size: "
             <div data-wysihtml-dialog='fontSizeStyle' style='display: none;'>
               Size:
               <input type='text' data-wysihtml-dialog-field='size' style='width: 60px;' value='' />
               <a data-wysihtml-dialog-action='save'>OK</a>&nbsp;<a data-wysihtml-dialog-action='cancel'>Cancel</a>
-            </div>"
+            </div>
+            ",
+              createTable: "
+            <div data-wysihtml-dialog='createTable' style='display: none;'>
+              Rows: <input type='text' data-wysihtml-dialog-field='rows' /><br/>
+              Cols: <input type='text' data-wysihtml-dialog-field='cols' /><br/>
+              <a data-wysihtml-dialog-action='save'>OK</a>&nbsp;<a data-wysihtml-dialog-action='cancel'>Cancel</a>
+            </div>
+            <div class='block' data-wysihtml-hiddentools='table' style='display: none;'>
+              <a data-wysihtml-command='mergeTableCells'>Merge</a>
+              <a data-wysihtml-command='addTableCells' data-wysihtml-command-value='above'>row-before</a>
+              <a data-wysihtml-command='addTableCells' data-wysihtml-command-value='below'>row-after</a>
+              <a data-wysihtml-command='addTableCells' data-wysihtml-command-value='before'>col-before</a>
+              <a data-wysihtml-command='addTableCells' data-wysihtml-command-value='after'>col-after</a>
+              <a data-wysihtml-command='deleteTableCells' data-wysihtml-command-value='row'>delete row</a>
+              <a data-wysihtml-command='deleteTableCells' data-wysihtml-command-value='column'>delete col</a>
+            </div>
+            "
         }
 
         toolbar_commands = options[:commands] || input_html_options[:commands] || :all

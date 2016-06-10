@@ -25,7 +25,7 @@ wysihtml.commands.createTable = {
     var col, row, html;
     if (value && value.cols && value.rows && parseInt(value.cols, 10) > 0 && parseInt(value.rows, 10) > 0) {
       if (value.tableStyle) {
-        html = '<table style="' + value.tableStyle + '">';
+        html = '<table class="table table-bordered table-striped" style="' + value.tableStyle + '">';
       } else {
         html = '<table>';
       }
@@ -1036,7 +1036,7 @@ wysihtml.commands.mergeTableCells = {
     }
     this.tableSelection = wysihtml.quirks.tableCellsSelection(this.element, this.parent);
   };
-  
+
   // Cell selections handling
   var tableCellsSelection = function(editable, editor) {
 
