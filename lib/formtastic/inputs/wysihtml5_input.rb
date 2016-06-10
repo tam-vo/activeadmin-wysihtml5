@@ -60,7 +60,8 @@ module Formtastic
           [ :alignLeft, :alignRight, :alignCenter ],
           [ :size ],
           [ :color ],
-          [ :link, :removeLink ],
+          [ :link ],
+          [ :removeLink ],
           [ :image ],
           [ :video ],
           [ :undo, :redo],
@@ -113,6 +114,17 @@ module Formtastic
               <a data-wysihtml-command='addTableCells' data-wysihtml-command-value='after'>col-after</a>
               <a data-wysihtml-command='deleteTableCells' data-wysihtml-command-value='row'>delete row</a>
               <a data-wysihtml-command='deleteTableCells' data-wysihtml-command-value='column'>delete col</a>
+            </div>
+            ",
+              link: "
+            <div data-wysihtml-dialog='createLink' style='display: none;'>
+              <label>
+                Link:
+                <input data-wysihtml-dialog-field='href' value='http://'>
+              </label>
+              <div>
+              <a data-wysihtml-dialog-action='save'>OK</a>&nbsp;<a data-wysihtml-dialog-action='cancel'>Cancel</a>
+              </div>
             </div>
             "
         }

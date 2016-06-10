@@ -52,6 +52,8 @@
       window.WYSIHTML5.instances[$textarea.attr("id")] = editor
 
       $button = $toolbar.find('a[data-wysihtml-command=createLink]').click ->
+        activeButton = $(this).hasClass("wysihtml-command-active")
+        return if activeButton
         $modal = $editor.find(".modal-link").clone()
         $field = $modal.find("input")
         $tab_contents = $modal.find("[data-tab]").hide()
@@ -62,34 +64,28 @@
           $(@).addClass("active")
           false
 
-        activeButton = $(this).hasClass("wysihtml-command-active")
-        if !activeButton
-          $modal.modal()
-          $tab_contents.find("[name=text]").val(editor.composer.selection.getText())
-          $tab_handles.eq(0).click()
+        $modal.modal()
+        $tab_contents.find("[name=text]").val(editor.composer.selection.getText())
+        $tab_handles.eq(0).click()
 
-          $modal.find("[data-action=save]").click ->
-            $content = $tab_contents.filter(":visible")
-            el = switch $content.attr("id")
-              when "modal-link-url"
-                href: $content.find("[name=url]").val()
-                text: $content.find("[name=text]").val()
-                rel: $content.find("[name=rel]").val()
-                title: $content.find("[name=title]").val()
-                target: (if $content.find("[name=blank]").is(":checked") then "_blank" else "")
-              when "modal-link-email"
-                href: "mailto:" + $content.find("[name=email]").val()
-                text: $content.find("[name=text]").val()
-              when "modal-link-anchor"
-                id: $content.find("[name=anchor]").val()
-                text: $content.find("[name=text]").val()
+        $modal.find("[data-action=save]").click ->
+          $content = $tab_contents.filter(":visible")
+          el = switch $content.attr("id")
+            when "modal-link-url"
+              href: $content.find("[name=url]").val()
+              text: $content.find("[name=text]").val()
+              rel: $content.find("[name=rel]").val()
+              title: $content.find("[name=title]").val()
+              target: (if $content.find("[name=blank]").is(":checked") then "_blank" else "")
+            when "modal-link-email"
+              href: "mailto:" + $content.find("[name=email]").val()
+              text: $content.find("[name=text]").val()
+            when "modal-link-anchor"
+              id: $content.find("[name=anchor]").val()
+              text: $content.find("[name=text]").val()
 
-            editor.currentView.element.focus()
-            editor.composer.commands.exec("createLink", el)
-
-          false
-        else
-          true
+          editor.currentView.element.focus()
+          editor.composer.commands.exec("createLink", el)
 
       $toolbar.find('a[data-wysihtml-command=insertImage]').click ->
         $modal = $editor.find(".modal-image").clone()
