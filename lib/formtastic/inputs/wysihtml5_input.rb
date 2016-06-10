@@ -6,7 +6,7 @@ module Formtastic
         barebone: [ :bold, :italic, :link, :source ],
         basic: [ :bold, :italic, :ul, :ol, :link, :image, :source ],
         all: [ :bold, :italic, :underline, :ul, :ol, :outdent, :indent, :link, :image, :video, :source,
-               :alignLeft, :alignRight, :alignCenter, :color, :undo, :redo ]
+               :alignLeft, :alignRight, :alignCenter, :size, :color, :undo, :redo ]
       }
 
       BLOCKS_PRESET = {
@@ -58,6 +58,7 @@ module Formtastic
           [ :bold, :italic, :underline ],
           [ :ul, :ol, :outdent, :indent ],
           [ :alignLeft, :alignRight, :alignCenter ],
+          [ :size ],
           [ :color ],
           [ :link ],
           [ :image ],
@@ -76,6 +77,7 @@ module Formtastic
           alignRight: 'alignRightStyle',
           alignCenter: 'alignCenterStyle',
           color: 'foreColorStyle',
+          size: 'fontSizeStyle',
           undo: 'undo',
           redo: 'redo'
         }
@@ -84,6 +86,12 @@ module Formtastic
             <div data-wysihtml-dialog='foreColorStyle' style='display: none;'>
               Color:
               <input type='text' data-wysihtml-dialog-field='color' value='rgba(0,0,0,1)' />
+              <a data-wysihtml-dialog-action='save'>OK</a>&nbsp;<a data-wysihtml-dialog-action='cancel'>Cancel</a>
+            </div>",
+              size: "
+            <div data-wysihtml-dialog='fontSizeStyle' style='display: none;'>
+              Size:
+              <input type='text' data-wysihtml-dialog-field='size' style='width: 60px;' value='' />
               <a data-wysihtml-dialog-action='save'>OK</a>&nbsp;<a data-wysihtml-dialog-action='cancel'>Cancel</a>
             </div>"
         }
