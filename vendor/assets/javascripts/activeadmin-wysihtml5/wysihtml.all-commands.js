@@ -4,7 +4,7 @@ wysihtml.commands.alignCenterStyle = (function() {
     styleValue: "center",
     toggle: true
   };
-  
+
   return {
     exec: function(composer, command) {
       return wysihtml.commands.formatBlock.exec(composer, "formatBlock", nodeOptions);
@@ -124,7 +124,7 @@ wysihtml.commands.bold = (function() {
     nodeName: "B",
     toggle: true
   };
-  
+
   return {
     exec: function(composer, command) {
       wysihtml.commands.formatInline.exec(composer, command, nodeOptions);
@@ -420,7 +420,7 @@ wysihtml.commands.insertBlockQuote = (function() {
     nodeName: "BLOCKQUOTE",
     toggle: true
   };
-  
+
   return {
     exec: function(composer, command) {
       return wysihtml.commands.formatBlock.exec(composer, "formatBlock", nodeOptions);
@@ -456,7 +456,7 @@ wysihtml.commands.insertUnorderedList = (function() {
   };
 })();
 
-wysihtml.commands.italic = (function() { 
+wysihtml.commands.italic = (function() {
   var nodeOptions = {
     nodeName: "I",
     toggle: true
@@ -490,7 +490,7 @@ wysihtml.commands.justifyCenter = (function() {
       return wysihtml.commands.formatBlock.state(composer, "formatBlock", nodeOptions);
     }
   };
-  
+
 })();
 
 wysihtml.commands.justifyFull = (function() {
