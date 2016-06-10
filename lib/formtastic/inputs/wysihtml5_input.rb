@@ -120,11 +120,28 @@ module Formtastic
             <div data-wysihtml-dialog='createLink' style='display: none;'>
               <label>
                 Link:
-                <input data-wysihtml-dialog-field='href' value='http://'>
+                <input type='text' style='width: 120px;' data-wysihtml-dialog-field='href' value='http://'>
               </label>
               <div>
               <a data-wysihtml-dialog-action='save'>OK</a>&nbsp;<a data-wysihtml-dialog-action='cancel'>Cancel</a>
               </div>
+            </div>
+            ",
+              image: "
+            <div data-wysihtml-dialog='insertImage' style='display: none;'>
+              <label>
+                Image:
+                <input type='text' style='width: 120px;' data-wysihtml-dialog-field='src' value='http://'>
+              </label>
+              <label>
+                Align:
+                <select data-wysihtml-dialog-field='className'>
+                  <option value=''>default</option>
+                  <option value='wysiwyg-float-left'>left</option>
+                  <option value='wysiwyg-float-right'>right</option>
+                </select>
+              </label>
+              <a data-wysihtml-dialog-action='save'>OK</a>&nbsp;<a data-wysihtml-dialog-action='cancel'>Cancel</a>
             </div>
             "
         }
