@@ -199,7 +199,7 @@
           true
 
   $ ->
-    $('.activeadmin-wysihtml:visible').activeAdminWysihtml5()
+    $('.activeadmin-wysihtml.enable:visible').activeAdminWysihtml5()
     $("a").bind "click", ->
       setTimeout(
         -> $('.activeadmin-wysihtml:visible').activeAdminWysihtml5()

@@ -192,12 +192,16 @@ module Formtastic
         end
 
         opts = { style: "height: #{height}px" }
+        klass = options[:enable] == false ? "" : "enable"
 
         input_wrapping do
           label_html <<
-          template.content_tag(:div, class: 'activeadmin-wysihtml') do
-            toolbar <<
-            builder.text_area(method, input_html_options.merge(opts))
+          template.content_tag(:div, class: "activeadmin-wysihtml #{klass}") do
+            if options[:enable] == false
+              builder.text_area(method, input_html_options.merge(opts))
+            else
+              toolbar << builder.text_area(method, input_html_options.merge(opts))
+            end
           end
         end
       end

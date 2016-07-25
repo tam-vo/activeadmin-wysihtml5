@@ -1,9 +1,5 @@
 # `activeadmin-wysihtml5`
 
-### :warning: Unmaintained :warning:
-
-Sorry, but I no longer work on ActiveAdmin often enough to justify mantaining this gem. Take it as it is. If you are interested to update and maintain the gem, please let me know! :heart:
-
 ## Screenshots
 
 ![activeadmin-wysihtml5 screenshot](https://raw.github.com/stefanoverna/activeadmin-wysihtml5/master/screenshot.png)
@@ -74,4 +70,9 @@ end
 * `:large`: 350px;
 * `:huge`: 450px;
 * an integer representing the height of the editor;
+
+### `:enable`
+
+* `true`: by default
+* `false`: turn off in some situation
 
