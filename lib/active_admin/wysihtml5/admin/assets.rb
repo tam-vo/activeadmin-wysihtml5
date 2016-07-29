@@ -41,18 +41,9 @@ ActiveAdmin.register Asset do
     def create
       # If an app is using Rack::RawUpload, it can just use
       # params['file'] and not worry with original_filename parsing.
-      if params['file']
+      if params['qqfile']
         @asset = Asset.new
-        @asset.storage = params['file']
-
-        if @asset.save!
-          render json: { success: true }.to_json
-        else
-          render nothing: true, status: 500 and return
-        end
-      elsif params['qqfile']
-        @asset = Asset.new
-        io = request.env['rack.input']
+        # io = request.env['rack.input']
         # throw io
 
         # def io.original_filename=(name) @original_filename = name; end
@@ -60,7 +51,17 @@ ActiveAdmin.register Asset do
 
         # io.original_filename = params['qqfile']
 
-        @asset.storage = io
+        @asset.storage = params[:file][:image]
+        debugger
+        if @asset.save!
+          render json: { success: true }.to_json
+        else
+          render nothing: true, status: 500 and return
+        end
+      elsif params['file']
+        @asset = Asset.new
+        @asset.storage = params['file']
+
         if @asset.save!
           render json: { success: true }.to_json
         else
