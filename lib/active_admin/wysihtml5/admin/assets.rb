@@ -1,12 +1,12 @@
 ActiveAdmin.register Asset do
   menu false
   index as: :grid do |asset|
-    link_to(image_tag(asset.storage.thumb("100x100#").url), admin_asset_path(asset))
+    link_to(image_tag(asset.storage.url(:small)), admin_asset_path(asset))
   end
 
   form do |f|
     f.inputs do
-      f.input :storage, as: :dragonfly, input_html: { components: [:preview, :upload, :url, :remove ] }
+      f.input :storage
     end
     f.actions
   end
@@ -19,14 +19,14 @@ ActiveAdmin.register Asset do
       row('Thumbnail') do
         image_tag(asset.thumb_url)
       end
-      row('25%') do
-        image_tag(asset.percentage_thumb_url(0.25))
+      row('small') do
+        image_tag(asset.storage.url(:small))
       end
-      row('50%') do
-        image_tag(asset.percentage_thumb_url(0.5))
+      row('medium') do
+        image_tag(asset.storage.url(:medium))
       end
-      row('75%') do
-        image_tag(asset.percentage_thumb_url(0.75))
+      row('large') do
+        image_tag(asset.storage.url(:large))
       end
       row('Full Image') do
         image_tag(asset.storage.url)
@@ -60,7 +60,7 @@ ActiveAdmin.register Asset do
 
         # io.original_filename = params['qqfile']
 
-        @asset.storage = Dragonfly::TempObject.new(io.respond_to?(:string) ? io.string : io.read)
+        @asset.storage = io
         if @asset.save!
           render json: { success: true }.to_json
         else

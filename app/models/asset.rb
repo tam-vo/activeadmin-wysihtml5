@@ -1,30 +1,63 @@
 class Asset < ActiveRecord::Base
-  dragonfly_accessor :storage
+  before_save :extract_dimensions
+  serialize :dimensions
 
-  def percentage_thumb_url(size)
-    width = (storage.width * size).ceil
-    height = (storage.height * size).ceil
-    storage.thumb("#{width}x#{height}").url
-  end
+  has_attached_file :storage,
+    styles: {
+      small: '100x100#',
+      medium: '320x320#',
+      large: '640x640#'
+    },
+    source_file_options: ActiveAdmin::Wysihtml5.config.source_file_options,
+    convert_options: ActiveAdmin::Wysihtml5.config.convert_options,
+    storage: ActiveAdmin::Wysihtml5.paperclip_storage,
+    s3_credentials: ActiveAdmin::Wysihtml5.s3_credentials,
+    s3_host_name: ActiveAdmin::Wysihtml5.s3_host_name,
+    url: ActiveAdmin::Wysihtml5.storage_url,
+    path: ActiveAdmin::Wysihtml5.storage_path
+
+  validates_attachment_presence :storage
+  validates_attachment_size     :storage, :less_than => 20.megabytes
+  validates_attachment_content_type :storage, :content_type => ["image/jpeg", "image/jpg", "image/png", "image/gif"]
 
   def thumb_url
-    storage.thumb("100x100#").url
+    storage.url(:small)
   end
 
   def as_json(options = {})
+    width, height = self.dimensions
     {
       dimensions: {
-        width: storage.width,
-        height: storage.height
+        width: width,
+        height: height
       },
       thumb_url: thumb_url,
       source_url: {
         full: storage.url,
-        three_quarters: percentage_thumb_url(0.75),
-        half: percentage_thumb_url(0.5),
-        one_quarter: percentage_thumb_url(0.25)
+        three_quarters: storage.url(:large),
+        half: storage.url(:medium),
+        one_quarter: storage.url(:small)
       }
     }
+  end
+
+  # Helper method to determine whether or not an attachment is an image.
+  # @note Use only if you have a generic asset-type model that can handle different file types.
+  def image?
+    storage_content_type =~ %r{^(image|(x-)?application)/(bmp|gif|jpeg|jpg|pjpeg|png|x-png)$}
+  end
+
+  private
+
+  # Retrieves dimensions for image assets
+  # @note Do this after resize operations to account for auto-orientation.
+  def extract_dimensions
+    return unless image?
+    tempfile = storage.queued_for_write[:original]
+    unless tempfile.nil?
+      geometry = Paperclip::Geometry.from_file(tempfile)
+      self.dimensions = [geometry.width.to_i, geometry.height.to_i].join('x')
+    end
   end
 end
 
