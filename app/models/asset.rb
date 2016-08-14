@@ -26,14 +26,14 @@ class Asset < ActiveRecord::Base
 
   def storage_url(size=nil)
     if ActiveAdmin::Wysihtml5.paperclip_storage.to_s == "s3"
-      "#{ENV["ASSET_PROTOCOL"]}://#{ENV["ASSET_HOST"]}#{storage.path(:small)}"
+      "#{ENV["ASSET_PROTOCOL"]}://#{ENV["ASSET_HOST"]}#{storage.path(size)}"
     else
       storage.url(size)
     end
   end
 
   def as_json(options = {})
-    width, height = self.dimensions
+    width, height = self.dimensions.try(:split, "x")
     {
       dimensions: {
         width: width,
