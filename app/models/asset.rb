@@ -21,7 +21,15 @@ class Asset < ActiveRecord::Base
   validates_attachment_content_type :storage, :content_type => ["image/jpeg", "image/jpg", "image/png", "image/gif"]
 
   def thumb_url
-    storage.url(:small)
+    storage_url(:small)
+  end
+
+  def storage_url(size=nil)
+    if ActiveAdmin::Wysihtml5.paperclip_storage.to_s == "s3"
+      "#{ENV["ASSET_PROTOCOL"]}://#{ENV["ASSET_HOST"]}#{storage.path(:small)}"
+    else
+      storage.url(size)
+    end
   end
 
   def as_json(options = {})
@@ -33,10 +41,10 @@ class Asset < ActiveRecord::Base
       },
       thumb_url: thumb_url,
       source_url: {
-        full: storage.url,
-        three_quarters: storage.url(:large),
-        half: storage.url(:medium),
-        one_quarter: storage.url(:small)
+        full: storage_url,
+        three_quarters: storage_url(:large),
+        half: storage_url(:medium),
+        one_quarter: storage_url(:small)
       }
     }
   end

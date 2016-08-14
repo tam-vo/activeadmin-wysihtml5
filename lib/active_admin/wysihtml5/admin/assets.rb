@@ -52,7 +52,6 @@ ActiveAdmin.register Asset do
         # io.original_filename = params['qqfile']
 
         @asset.storage = params[:file][:image]
-        debugger
         if @asset.save!
           render json: { success: true }.to_json
         else
