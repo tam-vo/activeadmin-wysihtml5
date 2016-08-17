@@ -11,8 +11,6 @@ class Asset < ActiveRecord::Base
     source_file_options: ActiveAdmin::Wysihtml5.config.source_file_options,
     convert_options: ActiveAdmin::Wysihtml5.config.convert_options,
     storage: ActiveAdmin::Wysihtml5.paperclip_storage,
-    s3_credentials: ActiveAdmin::Wysihtml5.s3_credentials,
-    s3_host_name: ActiveAdmin::Wysihtml5.s3_host_name,
     url: ActiveAdmin::Wysihtml5.storage_url,
     path: ActiveAdmin::Wysihtml5.storage_path
 
